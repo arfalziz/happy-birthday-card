@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🎉 SURPRISE for POPO 🎉</title>
+  <style>
+    body {
+      background-color: #fff0f6;
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    h1 {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3em;
+      color: #d63384;
+      text-align: center;
+      z-index: 10;
+      animation: popin 1s ease-out;
+    }
+
+    @keyframes popin {
+      0% {
+        transform: scale(0.3) translate(-50%, -50%);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1) translate(-50%, -50%);
+        opacity: 1;
+      }
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 2rem;
+      animation: fall 7s linear infinite;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 0%;">
+        <h1>🎉 BAU BANGET!!!🎉</h1>
+       
+      </div>
+      
+
+  <!-- Musik -->
+  <audio id="bgMusic" src="surprise.mp3" autoplay></audio>
+
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.min.js"></script>
+
+  <script>
+    // Konfeti
+    function launchConfetti() {
+      const duration = 4 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(function () {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) return clearInterval(interval);
+
+        const particleCount = 100 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, {
+          particleCount,
+          origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+        }));
+        confetti(Object.assign({}, defaults, {
+          particleCount,
+          origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+        }));
+      }, 250);
+    }
+    // Add a photo
+    const photo = document.createElement("img");
+    photo.src = "POPO.jpg";
+    photo.alt = "Surprise Photo";
+    photo.style.position = "absolute";
+    photo.style.top = "70%";
+    photo.style.left = "50%";
+    photo.style.transform = "translate(-50%, -50%)";
+    photo.style.width = "300px"; // Adjust size as needed
+    photo.style.borderRadius = "15px";
+    photo.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+    photo.style.zIndex = "5";
+    document.body.appendChild(photo);
+    // Emoji floating
+    function createFloatingEmojis() {
+      const emojis = ["🌸", "💖", "✨", "🎀", "🩷", "🌷", "💫"];
+      for (let i = 0; i < 80; i++) {
+        const emoji = document.createElement("div");
+        emoji.classList.add("emoji");
+        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = Math.random() * 100 + "vw";
+        emoji.style.animationDelay = Math.random() * 5 + "s";
+        emoji.style.fontSize = (Math.random() * 2 + 1.2) + "rem";
+        document.body.appendChild(emoji);
+      }
+    }
+
+    window.addEventListener("load", () => {
+      const music = document.getElementById('bgMusic');
+      music.volume = 0.4;
+      music.play().catch(() => {});
+
+      launchConfetti();
+      createFloatingEmojis();
+    });
+  </script>
+</body>
+</html>
